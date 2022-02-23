@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locate Me</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <style>
+        h1 {
+            font-family: 'Varela Round', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        if ('geolocation' in navigator) {
+            console.log('geolocation available');
+            navigator.geolocation.getCurrentPosition(position => {
+                //console.log(position.coords.latitude);
+                //console.log(position.coords.longitude);
+                console.log(position.coords);
+                const lat = position.coords.latitude;
+                const long = position.coords.longitude;
+                document.getElementById('lat').textContent = lat;
+                document.getElementById('long').textContent = long;
+                const data = {
+                    lat,
+                    long
+                }
+
+                const options = {
+                    method: 'POST',
+                    Headers: {
+                        'Content-Type': 'applicaton/json'
+                    },
+                    body: JSON.stringify(data)
+                };
+                fetch('/api', options)
+
+            });
+        } else {
+            console.log('Geolocation is not available');
+            alert('Geolocation is Not available');
+        }
+    </script>
+    <center>
+        <h1>Your latitude and longitude</h1>
+    </center>
+    <h4>Latitude: <span id="lat"></span>&deg</h4>
+    <h4>Longitude: <span id="long"></span>&deg</h4>
+</body>
+
+</html>
