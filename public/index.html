@@ -17,32 +17,40 @@
 
 <body>
     <script>
-        if ('geolocation' in navigator) {
-            console.log('geolocation available');
-            navigator.geolocation.getCurrentPosition(position => {
-                console.log(position.coords);
-                const lat = position.coords.latitude;
-                const long = position.coords.longitude;
-                document.getElementById('lat').textContent = lat;
-                document.getElementById('long').textContent = long;
-                const data = {
-                    lat,
-                    long
-                }
+        function submit (input) 
+        {
 
-                const options = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                };
-                fetch('/api', options)
 
-            });
-        } else {
-            console.log('Geolocation is not available');
-            alert('Geolocation is Not available');
+            if ('geolocation' in navigator) {
+                console.log('geolocation available');
+                navigator.geolocation.getCurrentPosition(position => {
+                    console.log(position.coords);
+                    const lat = position.coords.latitude;
+                    const long = position.coords.longitude;
+                    document.getElementById('lat').textContent = lat;
+                    document.getElementById('long').textContent = long;
+                    let text = '';
+                    document.getElementById('poke').textContent = text;
+                    const data = {
+                        lat,
+                        long,
+                        text
+                    }
+
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    };
+                    fetch('/api', options)
+                    
+                });
+            } else {
+                console.log('Geolocation is not available');
+                alert('Geolocation is Not available');
+            }
         }
     </script>
     <center>
@@ -50,6 +58,8 @@
     </center>
     <h4>Latitude: <span id="lat"></span>&deg</h4>
     <h4>Longitude: <span id="long"></span>&deg</h4>
+    <input type="text" id="poke">
+    <button onclick='submit(poke)' type="submit">Submit</button>
 </body>
 
 </html>

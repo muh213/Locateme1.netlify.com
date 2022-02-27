@@ -11,14 +11,9 @@ const database = new Datastore('databases.db');
 database.loadDatabase();
 
 app.post('/api', (request, response) => {
-    console.log('I got a request!');
-    console.log(request.body);
     const data = request.body;
+    const timestamp = Date.now();
+    data.timestamp = timestamp;
     database.insert(data);
-
-    response.json({
-        status: 'success',
-        lat: 'something',
-        long: 'what?'
-    })
+    response.json(data);
 });
