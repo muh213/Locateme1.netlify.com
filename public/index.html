@@ -20,8 +20,6 @@
         if ('geolocation' in navigator) {
             console.log('geolocation available');
             navigator.geolocation.getCurrentPosition(position => {
-                //console.log(position.coords.latitude);
-                //console.log(position.coords.longitude);
                 console.log(position.coords);
                 const lat = position.coords.latitude;
                 const long = position.coords.longitude;
@@ -34,8 +32,8 @@
 
                 const options = {
                     method: 'POST',
-                    Headers: {
-                        'Content-Type': 'applicaton/json'
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
                 };
